@@ -13,9 +13,9 @@ var generateRandomArrayElement = function (array) {
   return array[random];
 };
 
-var generateWizards = function (array) {
+var generateWizards = function (length) {
   var wizards = [];
-  for (var i = 0; i < array; i++) {
+  for (var i = 0; i < length; i++) {
     wizards.push({
       name: generateRandomArrayElement(names) + ' ' + generateRandomArrayElement(familyNames),
       coats: generateRandomArrayElement(coatColors),
