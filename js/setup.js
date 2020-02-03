@@ -56,12 +56,7 @@ var ENTER_KEYCODE = 13;
 var setupOpen = document.querySelector('.setup-open');
 var setup = document.querySelector('.setup');
 var setupClose = setup.querySelector('.setup-close');
-
-var onPopupEscPress = function (evt) {
-  if (evt.keyCode === ESC_KEYCODE) {
-    closePopup();
-  }
-};
+var inputElement = setup.querySelector('.setup-user-name');
 
 var openPopup = function () {
   setup.classList.remove('hidden');
@@ -73,6 +68,12 @@ var closePopup = function () {
   setup.classList.add('hidden');
   document.removeEventListener('keydown', onPopupEscPress);
   setupClose.removeEventListener('click', closePopup);
+};
+
+var onPopupEscPress = function (evt) {
+  if (evt.keyCode === ESC_KEYCODE && !inputElement.matches(':focus')) {
+    closePopup();
+  }
 };
 
 setupOpen.addEventListener('click', function () {
