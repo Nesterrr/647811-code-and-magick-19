@@ -73,12 +73,6 @@ var closePopup = function () {
   setup.classList.add('hidden');
   document.removeEventListener('keydown', onPopupEscPress);
   setupPlayer.removeEventListener('click', setColor);
-
-  setupOpen.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === ENTER_KEY) {
-      openPopup();
-    }
-  });
 };
 
 setupOpen.addEventListener('click', openPopup);
@@ -89,6 +83,12 @@ var onPopupEscPress = function (evt) {
     closePopup();
   }
 };
+
+setupOpen.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === ENTER_KEY) {
+    openPopup();
+  }
+});
 
 var userNameInput = setup.querySelector('.setup-user-name');
 
