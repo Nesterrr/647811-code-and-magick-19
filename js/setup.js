@@ -8,7 +8,6 @@
   var setupOpen = document.querySelector('.setup-open');
   var setupClose = setup.querySelector('.setup-close');
   var inputElement = setup.querySelector('.setup-user-name');
-  // var setupPlayer = document.querySelector('.setup-player');
 
   var openPopup = function () {
     setup.classList.remove('hidden');
@@ -26,7 +25,7 @@
     document.removeEventListener('keydown', onPopupEscPress);
     setup.style.top = null;
     setup.style.left = null;
-    // setupPlayer.removeEventListener('click', setColor);
+    window.similarwizards.setupPlayer.removeEventListener('click', window.similarwizards.setColor);
   };
 
   setupOpen.addEventListener('click', openPopup);

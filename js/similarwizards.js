@@ -68,4 +68,9 @@
 
   setupPlayer.addEventListener('click', setColor);
 
+  window.similarwizards = {
+    setupPlayer: setupPlayer,
+    setColor: setColor
+  };
+
 })();
