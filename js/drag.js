@@ -1,6 +1,6 @@
 'use strict';
 (function () {
-  // var setup = document.querySelector('.setup');
+  var setupDialogElement = document.querySelector('.setup');
   var dialogHandler = document.querySelector('.upload');
 
   dialogHandler.addEventListener('mousedown', function (evt) {
@@ -27,8 +27,8 @@
         y: moveEvt.clientY
       };
 
-      window.setup.setup.style.top = (window.setup.setup.offsetTop - shift.y) + 'px';
-      window.setup.setup.style.left = (window.setup.setup.offsetLeft - shift.x) + 'px';
+      setupDialogElement.style.top = (setupDialogElement.offsetTop - shift.y) + 'px';
+      setupDialogElement.style.left = (setupDialogElement.offsetLeft - shift.x) + 'px';
 
     };
 
