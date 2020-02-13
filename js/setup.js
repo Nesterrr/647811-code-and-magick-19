@@ -1,45 +1,62 @@
 'use strict';
 (function () {
-  var names = ['Иван', 'Хуан Себастьян', 'Мария', 'Кристоф', 'Виктор', 'Юлия', 'Люпита', 'Вашингтон'];
-  var familyNames = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
-  var coatColors = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
-  var eyesColors = ['black', 'red', 'blue', 'yellow', 'green'];
-
-  var generateWizards = function (length) {
-    var wizards = [];
-    for (var i = 0; i < length; i++) {
-      wizards.push({
-        name: window.helpers.generateRandomArrayElement(names) + ' ' + window.helpers.generateRandomArrayElement(familyNames),
-        coats: window.helpers.generateRandomArrayElement(coatColors),
-        eyes: window.helpers.generateRandomArrayElement(eyesColors),
-      });
-    }
-    return wizards;
-  };
+  var setupDialogElement = document.querySelector('.setup');
+  var form = setupDialogElement.querySelector('.setup-wizard-form');
 
   var renderWizard = function (wizard) {
     var wizardElement = similarWizardTemplate.cloneNode(true);
     wizardElement.querySelector('.setup-similar-label').textContent = wizard.name;
-    wizardElement.querySelector('.wizard-coat').style.fill = wizard.coats;
-    wizardElement.querySelector('.wizard-eyes').style.fill = wizard.eyes;
-
+    wizardElement.querySelector('.wizard-coat').style.fill = wizard.colorCoat;
+    wizardElement.querySelector('.wizard-eyes').style.fill = wizard.colorEyes;
     return wizardElement;
   };
 
   var similarListElement = document.querySelector('.setup-similar-list');
   var similarWizardTemplate = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
 
-
-  var getWizards = function (array) {
+  var successHandler = function (wizards) {
     var fragment = document.createDocumentFragment();
-    for (var i = 0; i < array.length; i++) {
-      fragment.appendChild(renderWizard(array[i]));
+    for (var i = 0; i < 4; i++) {
+      fragment.appendChild(renderWizard(wizards[i]));
     }
     similarListElement.appendChild(fragment);
+    setupDialogElement.querySelector('.setup-similar').classList.remove('hidden');
   };
 
-  getWizards(generateWizards(4));
+  var errorHandler = function (errorMessage) {
+    var node = document.createElement('div');
+    node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: red;';
+    node.style.position = 'absolute';
+    node.style.left = 0;
+    node.style.right = 0;
+    node.style.fontSize = '30px';
+
+    node.textContent = errorMessage;
+    document.body.insertAdjacentElement('afterbegin', node);
+  };
+
+  window.backend.load(successHandler, errorHandler);
+
+  var successSendHandler = function () {
+    var node = document.createElement('div');
+    node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: green;';
+    node.style.position = 'absolute';
+    node.style.left = 0;
+    node.style.right = 0;
+    node.style.fontSize = '30px';
+
+    node.textContent = 'Форма успешно отправлена';
+    document.body.insertAdjacentElement('afterbegin', node);
+  };
 
   document.querySelector('.setup-similar').classList.remove('hidden');
+
+  form.addEventListener('submit', function (evt) {
+    window.backend.save(new FormData(form), function () {
+      setupDialogElement.classList.add('hidden');
+      successSendHandler();
+    }, errorHandler);
+    evt.preventDefault();
+  });
 
 })();
