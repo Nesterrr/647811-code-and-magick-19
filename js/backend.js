@@ -6,7 +6,6 @@
     xhr.responseType = 'json';
 
     xhr.addEventListener('load', function () {
-      // console.log(xhr.response);
       switch (xhr.status) {
         case 200:
           onLoad(xhr.response);
