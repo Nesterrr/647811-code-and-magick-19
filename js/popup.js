@@ -18,6 +18,7 @@
   var eyesColor = ['black', 'red', 'blue', 'yellow', 'green'];
   var fireballColor = ['#ee4830', '#30a8ee', '#5ce6c0', '#e848d5', '#e6e848'];
   var setupPlayer = document.querySelector('.setup-player');
+  var form = setupDialogElement.querySelector('.setup-wizard-form');
 
   var openPopup = function () {
     setupDialogElement.classList.remove('hidden');
@@ -54,7 +55,6 @@
     }
   });
 
-
   var setColor = function (evt) {
     if (evt.target === wizardCoat) {
       wizardCoat.style.fill = window.helpers.generateRandomArrayElement(coatColor);
@@ -68,5 +68,39 @@
       fireball.style.backgroundColor = color;
     }
   };
+
+  var errorHandler = function (errorMessage) {
+    var node = document.createElement('div');
+    node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: red;';
+    node.style.position = 'absolute';
+    node.style.left = 0;
+    node.style.right = 0;
+    node.style.fontSize = '30px';
+
+    node.textContent = errorMessage;
+    document.body.insertAdjacentElement('afterbegin', node);
+  };
+
+  window.backend.load(window.similarWizards.generateWizards, errorHandler);
+
+  var successHandler = function () {
+    var node = document.createElement('div');
+    node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: green;';
+    node.style.position = 'absolute';
+    node.style.left = 0;
+    node.style.right = 0;
+    node.style.fontSize = '30px';
+
+    node.textContent = 'Форма успешно отправлена';
+    document.body.insertAdjacentElement('afterbegin', node);
+    setupDialogElement.classList.add('hidden');
+  };
+
+  document.querySelector('.setup-similar').classList.remove('hidden');
+
+  form.addEventListener('submit', function (evt) {
+    evt.preventDefault();
+    window.backend.save(new FormData(form), successHandler, errorHandler);
+  });
 
 })();
