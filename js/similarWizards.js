@@ -23,7 +23,8 @@
   };
 
   window.similarWizards = {
-    generateWizards: generateWizards
+    generateWizards: generateWizards,
+    renderWizard: renderWizard
   };
 
 })();
