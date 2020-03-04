@@ -1,9 +1,6 @@
 'use strict';
 (function () {
 
-  var ESC_KEY = 27;
-  var ENTER_KEY = 13;
-
   var COAT_COLORS = [
     'rgb(146, 100, 161)',
     'rgb(215, 210, 55)',
@@ -96,62 +93,6 @@
       fireball.style.backgroundColor = color;
     }
   };
-
-  var errorHandler = function (errorMessage) {
-    var node = document.createElement('div');
-    node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: red;';
-    node.style.position = 'absolute';
-    node.style.left = 0;
-    node.style.right = 0;
-    node.style.fontSize = '30px';
-
-    node.textContent = errorMessage;
-    document.body.insertAdjacentElement('afterbegin', node);
-  };
-
-
-  var coatColor;
-  var eyesColor;
-  var wizards = [];
-
-  var updateWizards = function () {
-    var sameCoatWizards = wizards.filter(function (it) {
-      return it.colorCoat === coatColor;
-    });
-    var sameEyesWizards = wizards.filter(function (it) {
-      return it.colorEyes === eyesColor;
-    });
-    var filteredWizards = sameCoatWizards.concat(sameEyesWizards).concat(wizards);
-    var uniqueWizards = filteredWizards.filter(function (it, i) {
-      return filteredWizards.indexOf(it) === i;
-    });
-    window.similarWizards.generateWizards(uniqueWizards);
-  };
-
-  var wizardElement = document.querySelector('.setup-wizard');
-
-  var wizardCoatElement = wizardElement.querySelector('.wizard-coat');
-  wizardCoatElement.addEventListener('click', function () {
-    var newColor = window.helpers.generateRandomArrayElement(COAT_COLORS);
-    wizardCoatElement.style.fill = newColor;
-    coatColor = newColor;
-    updateWizards();
-  });
-
-  var wizardEyesElement = wizardElement.querySelector('.wizard-eyes');
-  wizardEyesElement.addEventListener('click', function () {
-    var newColor = window.helpers.generateRandomArrayElement(EYES_COLORS);
-    wizardEyesElement.style.fill = newColor;
-    eyesColor = newColor;
-    updateWizards();
-  });
-
-  var onLoad = function (data) {
-    wizards = data;
-    updateWizards();
-  };
-
-  window.backend.load(onLoad, errorHandler);
 
   var successHandler = function () {
     var node = document.createElement('div');
