@@ -1,26 +1,7 @@
 'use strict';
 (function () {
-
-  var COAT_COLORS = [
-    'rgb(146, 100, 161)',
-    'rgb(215, 210, 55)',
-    'rgb(241, 43, 107)',
-    'rgb(101, 137, 164)',
-    'rgb(0, 0, 0)',
-    'rgb(215, 210, 55)',
-    'rgb(56, 159, 117)',
-    'rgb(241, 43, 107)'
-  ];
-
-  var EYES_COLORS = [
-    'red',
-    'orange',
-    'yellow',
-    'green',
-    'lightblue',
-    'blue',
-    'purple'
-  ];
+  var ENTER_KEY = 13;
+  var ESC_KEY = 27;
 
   var FIREBALL_COLORS = [
     '#ee4830',
@@ -39,8 +20,6 @@
   var wizardCoatInput = document.querySelector('input[name="coat-color"]');
   var wizardEyesInput = document.querySelector('input[name="eyes-color"]');
   var wizardFireballInput = document.querySelector('input[name="fireball-color"]');
-  // var coatColor = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
-  // var eyesColor = ['black', 'red', 'blue', 'yellow', 'green'];\
   var fireball = document.querySelector('.setup-fireball');
   var setupPlayer = document.querySelector('.setup-player');
   var form = setupDialogElement.querySelector('.setup-wizard-form');
@@ -82,10 +61,8 @@
 
   var setColor = function (evt) {
     if (evt.target === wizardCoat) {
-      wizardCoat.style.fill = window.helpers.generateRandomArrayElement(COAT_COLORS);
       wizardCoatInput.value = wizardCoat.style.fill;
     } if (evt.target === wizardEyes) {
-      wizardEyes.style.fill = window.helpers.generateRandomArrayElement(EYES_COLORS);
       wizardEyesInput.value = wizardEyes.style.fill;
     } if (evt.target === fireball) {
       var color = window.helpers.generateRandomArrayElement(FIREBALL_COLORS);
@@ -108,6 +85,18 @@
   };
 
   document.querySelector('.setup-similar').classList.remove('hidden');
+
+  var errorHandler = function (errorMessage) {
+    var node = document.createElement('div');
+    node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: red;';
+    node.style.position = 'absolute';
+    node.style.left = 0;
+    node.style.right = 0;
+    node.style.fontSize = '30px';
+
+    node.textContent = errorMessage;
+    document.body.insertAdjacentElement('afterbegin', node);
+  };
 
   form.addEventListener('submit', function (evt) {
     evt.preventDefault();
