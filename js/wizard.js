@@ -38,7 +38,7 @@
   var wizardEyesElement = wizardElement.querySelector('.wizard-eyes');
   wizardEyesElement.addEventListener('click', function () {
     var newColor = window.helpers.generateRandomArrayElement(EYES_COLORS);
-    wizardCoatElement.style.fill = newColor;
+    wizardEyesElement.style.fill = newColor;
     wizard.onEyesChange(newColor);
   });
 
